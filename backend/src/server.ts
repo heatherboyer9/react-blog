@@ -24,6 +24,7 @@ app.use(express.json());
 
 async function connectToDB() {
   const dbHost = process.env.DB_HOST ?? "mongodb://127.0.0.1:27017";
+  const dbName = process.env.DB_NAME ?? "react-blog";
   const client = new MongoClient(dbHost, { serverApi: {
     version: ServerApiVersion.v1,
     strict: true,
@@ -31,7 +32,7 @@ async function connectToDB() {
   } });
   
   await client.connect();
-  return client.db("react-blog-db");
+  return client.db(dbName);
 }
 
 async function startServer() {
