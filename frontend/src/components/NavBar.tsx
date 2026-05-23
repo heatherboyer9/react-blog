@@ -1,11 +1,10 @@
+import { useState } from 'react';
 import { signOut, getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { alpha, styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
+import { AppBar, Box, Button, Container, Drawer, IconButton, MenuList, MenuItem, Divider, Toolbar } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useUser } from "../hooks/useUser";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -27,6 +26,11 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 export default function NavBar() {
   const navigate = useNavigate();
   const { isLoading, user } = useUser();
+  const [open, setOpen] = useState(false);
+  
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
 
   return (
     <AppBar
@@ -36,7 +40,9 @@ export default function NavBar() {
         boxShadow: 0,
         bgcolor: 'transparent',
         backgroundImage: 'none',
-        mt: 'calc(var(--template-frame-height, 0px) + 28px)',
+        mt: { xs: 0, md: 'calc(var(--template-frame-height, 0px) + 28px)' },
+        left: 0,
+        right: 0,
       }}
     >
       <Container maxWidth="lg">
@@ -82,6 +88,71 @@ export default function NavBar() {
               )}
                 </>
               )}
+          </Box>
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
+            <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
+              <MenuIcon />
+            </IconButton>
+            <Drawer
+              anchor="top"
+              open={open}
+              onClose={toggleDrawer(false)}
+              slotProps={{
+                paper: {
+                  sx: {
+                    top: 0,
+                    right: 0,
+                    margin: 0,
+                    borderRadius: 0,
+                  },
+                },
+              }}
+            >
+              <MenuList>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'flex-end',
+                  }}
+                >
+                  <IconButton onClick={toggleDrawer(false)}>
+                    <CloseRoundedIcon />
+                  </IconButton>
+                </Box>
+              
+                <MenuItem onClick={() => { navigate("/"); toggleDrawer(false)(); }}>Home</MenuItem>
+                <MenuItem onClick={() => { navigate("/about"); toggleDrawer(false)(); }}>About</MenuItem>
+                <MenuItem onClick={() => { navigate("/articles"); toggleDrawer(false)(); }}>Articles</MenuItem>
+                <Divider sx={{ my: 3 }} />
+                {isLoading ? (
+                <span>Loading...</span>
+                ) : (
+                  <>
+                    {user && <span>Logged in as {user.email}</span>}
+                {user ? (
+                  <MenuItem>
+                    <Button color="primary" variant="text" size="small" onClick={() => { signOut(getAuth()); toggleDrawer(false)(); }}>
+                      Sign Out
+                    </Button>
+                  </MenuItem>
+                ) : (
+                  <>
+                <MenuItem>
+                  <Button color="primary" variant="text" size="small" onClick={() => { navigate("/login"); toggleDrawer(false)(); }}>
+                    Sign in
+                  </Button>
+                </MenuItem>
+                <MenuItem>
+                  <Button color="primary" variant="contained" size="small" onClick={() => { navigate("/create-account"); toggleDrawer(false)(); }}>
+                    Sign up
+                  </Button>
+                </MenuItem>
+                </>
+                )}
+                  </>
+                )}
+              </MenuList>
+            </Drawer>
           </Box>
         </StyledToolbar>
       </Container>
