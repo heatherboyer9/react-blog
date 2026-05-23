@@ -82,7 +82,7 @@ export default function ArticlePage() {
             <Typography variant="h5" gutterBottom sx={{ mb: 0 }}>
               Upvotes: {upvotes}
             </Typography>
-            {showUpvote && (
+            {user &&showUpvote && (
               <button onClick={onUpvoteClicked}>Upvote</button>
             )}
           </Box>
