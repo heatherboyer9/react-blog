@@ -1,8 +1,9 @@
-export default function CreateAccountPage() {
+import MainContent from '../components/MainContent';
+
+export default function HomePage() {
   return (
-    <div>
-      <h1>Home</h1>
-      <p>Welcome to the home page!</p>
-    </div>
+    <>
+      <MainContent />
+    </>
   );
 }

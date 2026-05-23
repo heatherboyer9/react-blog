@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import axios from "axios";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { useUser } from "../hooks/useUser";
-import { Article, Comment } from "../apis/models/types";
+import { Article } from "../apis/models/types";
 import CommentList from "../components/CommentList";
 import AddComment from "../components/AddComment";
 
@@ -43,7 +45,7 @@ export default function ArticlePage() {
     setUpvotes(updatedArticle.upvotes);
   }
 
-  async function onAddComment(text: string, postedBy: string) {
+  async function onAddComment(text: string, postedBy: string, dateCreated: string) {
     const token = user && (await user.getIdToken());
 
     if (!token) {
@@ -57,6 +59,7 @@ export default function ArticlePage() {
       {
         text,
         postedBy,
+        dateCreated,
       },
       { headers: authHeader },
     );
@@ -69,25 +72,38 @@ export default function ArticlePage() {
   if (!article) return <div>Article not found</div>;
 
   return (
-    <div>
-      <h1>{article.title}</h1>
-      {article.content.map((paragraph: string, key: number) => (
-        <p key={key}>{paragraph}</p>
-      ))}
-      <button onClick={onUpvoteClicked} disabled={!showUpvote}>
-        Upvote
-      </button>
-      <span> This article has {upvotes} upvote(s)</span>
-      {user ? (
+    <>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+        <div>
+          <Typography variant="h1" gutterBottom>
+            {article.title}
+          </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, mb: 2 }}>
+            <Typography variant="h5" gutterBottom sx={{ mb: 0 }}>
+              Upvotes: {upvotes}
+            </Typography>
+            {showUpvote && (
+              <button onClick={onUpvoteClicked}>Upvote</button>
+            )}
+          </Box>
+          {article.content.map((p: string, index: number) => (
+            <Typography key={index} variant="body1" gutterBottom>
+              {p}
+            </Typography>
+          ))}
+        </div>
+      </Box>
+      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+        
+      </Box>
+      {user && (
         <AddComment
           onAddComment={(comment) =>
-            onAddComment(comment.text, comment.postedBy)
+            onAddComment(comment.text, comment.postedBy, comment.dateCreated)
           }
         />
-      ) : (
-        <p>You must be logged in to add a comment</p>
       )}
-      <CommentList comments={comments as Comment[]} />
-    </div>
+      <CommentList comments={comments} />
+    </>
   );
 }

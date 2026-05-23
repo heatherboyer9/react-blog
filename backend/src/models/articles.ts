@@ -11,4 +11,5 @@ export interface Article {
 export interface Comment{
   postedBy: string;
   text: string;
+  dateCreated: string;
 }

@@ -59,9 +59,9 @@ export class ArticlesController {
 
   addArticleComment = async (req: Request<{ name: string }>, res: Response) => {
     const { name } = req.params;
-    const { postedBy, text } = req.body;
+    const { postedBy, text, dateCreated } = req.body;
     
-    const comment: Comment = { postedBy, text };
+    const comment: Comment = { postedBy, text, dateCreated };
 
     const article = await this.svc.addArticleComment(name, comment);
 
