@@ -2,15 +2,9 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { styled } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
-import MuiCard from '@mui/material/Card';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import Link from '@mui/material/Link';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import { Box, Button, Card as MuiCard, FormControl, FormLabel, IconButton, InputAdornment, Link, OutlinedInput, Stack, TextField, Typography } from '@mui/material';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import ForgotPassword from '../components/ForgotPassword';
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -65,6 +59,7 @@ export default function LoginPage() {
   const [emailErrorMessage, setEmailErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -112,6 +107,16 @@ export default function LoginPage() {
     }
 
     return isValid;
+  };
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+  };
+
+  const handleMouseUpPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
   };
 
   return (
@@ -165,7 +170,6 @@ export default function LoginPage() {
               helperText={passwordErrorMessage}
               name="password"
               placeholder="••••••"
-              type="password"
               id="password"
               autoComplete="current-password"
               autoFocus
@@ -174,6 +178,23 @@ export default function LoginPage() {
               variant="outlined"
               color={passwordError ? 'error' : 'primary'}
               onChange={e => setPassword(e.target.value)}
+              type={showPassword ? 'text' : 'password'}
+              slotProps={{
+                input: {
+                  endAdornment:<InputAdornment position="end">
+                  <IconButton
+                    aria-label={
+                      showPassword ? 'hide the password' : 'display the password'
+                    }
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    onMouseUp={handleMouseUpPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }}}
             />
           </FormControl>
           <ForgotPassword open={open} handleClose={handleClose} />

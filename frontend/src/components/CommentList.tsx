@@ -4,7 +4,7 @@ import { Comment } from "../apis/models/types";
 export default function CommentList({ comments }: { comments: Comment[] }) {
   return (
     <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-      <Typography variant="h3" gutterBottom>Comments</Typography>
+      <Typography variant="h4" gutterBottom>Comments</Typography>
       {comments.map((comment: Comment, key: number) => (
         <CommentItem
           key={key}
