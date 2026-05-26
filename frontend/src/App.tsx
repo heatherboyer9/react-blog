@@ -9,6 +9,10 @@ import NotFoundPage from "./pages/NotFoundPage";
 import LoginPage from "./pages/LoginPage";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import { getArticles, getArticle } from "./apis/endpoints/articles";
+import ProfilePage from "./pages/ProfilePage";
+import withProtected from "./hooks/routes";
+
+const ProfilePageWithProtected = withProtected(ProfilePage, "/login");
 
 const router = createBrowserRouter([
   {
@@ -41,6 +45,10 @@ const router = createBrowserRouter([
       {
         path: "/create-account",
         element: <CreateAccountPage />,
+      },
+      {
+        path: "/profile",
+        element: <ProfilePageWithProtected />,
       },
     ],
   },

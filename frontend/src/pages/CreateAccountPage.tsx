@@ -1,54 +1,54 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import Stack from '@mui/material/Stack';
-import MuiCard from '@mui/material/Card';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import FormLabel from '@mui/material/FormLabel';
-import FormControl from '@mui/material/FormControl';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
+import Stack from "@mui/material/Stack";
+import MuiCard from "@mui/material/Card";
+import { styled } from "@mui/material/styles";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import FormLabel from "@mui/material/FormLabel";
+import FormControl from "@mui/material/FormControl";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 
 const Card = styled(MuiCard)(({ theme }) => ({
-  display: 'flex',
-  flexDirection: 'column',
-  alignSelf: 'center',
-  width: '100%',
+  display: "flex",
+  flexDirection: "column",
+  alignSelf: "center",
+  width: "100%",
   padding: theme.spacing(4),
   gap: theme.spacing(2),
-  margin: 'auto',
+  margin: "auto",
   boxShadow:
-    'hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px',
-  [theme.breakpoints.up('sm')]: {
-    width: '450px',
+    "hsla(220, 30%, 5%, 0.05) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.05) 0px 15px 35px -5px",
+  [theme.breakpoints.up("sm")]: {
+    width: "450px",
   },
-  ...theme.applyStyles('dark', {
+  ...theme.applyStyles("dark", {
     boxShadow:
-      'hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px',
+      "hsla(220, 30%, 5%, 0.5) 0px 5px 15px 0px, hsla(220, 25%, 10%, 0.08) 0px 15px 35px -5px",
   }),
 }));
 
 const SignUpContainer = styled(Stack)(({ theme }) => ({
-  height: 'calc((1 - var(--template-frame-height, 0)) * 100dvh)',
-  minHeight: '100%',
+  height: "calc((1 - var(--template-frame-height, 0)) * 100dvh)",
+  minHeight: "100%",
   padding: theme.spacing(2),
-  [theme.breakpoints.up('sm')]: {
+  [theme.breakpoints.up("sm")]: {
     padding: theme.spacing(4),
   },
-  '&::before': {
+  "&::before": {
     content: '""',
-    display: 'block',
-    position: 'absolute',
+    display: "block",
+    position: "absolute",
     zIndex: -1,
     inset: 0,
     backgroundImage:
-      'radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))',
-    backgroundRepeat: 'no-repeat',
-    ...theme.applyStyles('dark', {
+      "radial-gradient(ellipse at 50% 50%, hsl(210, 100%, 97%), hsl(0, 0%, 100%))",
+    backgroundRepeat: "no-repeat",
+    ...theme.applyStyles("dark", {
       backgroundImage:
-        'radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))',
+        "radial-gradient(at 50% 50%, hsla(210, 100%, 16%, 0.5), hsl(220, 30%, 5%))",
     }),
   },
 }));
@@ -60,11 +60,11 @@ export default function CreateAccountPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [emailError, setEmailError] = useState(false);
-  const [emailErrorMessage, setEmailErrorMessage] = useState('');
+  const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
-  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     try {
@@ -84,41 +84,44 @@ export default function CreateAccountPage() {
 
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
       setEmailError(true);
-      setEmailErrorMessage('Please enter a valid email address.');
+      setEmailErrorMessage("Please enter a valid email address.");
       isValid = false;
     } else {
       setEmailError(false);
-      setEmailErrorMessage('');
+      setEmailErrorMessage("");
     }
 
     if (!password || password.length < 6) {
       setPasswordError(true);
-      setPasswordErrorMessage('Password must be at least 6 characters long.');
+      setPasswordErrorMessage("Password must be at least 6 characters long.");
       isValid = false;
     } else {
       setPasswordError(false);
-      setPasswordErrorMessage('');
+      setPasswordErrorMessage("");
     }
 
     if (password !== confirmPassword) {
       setPasswordError(true);
       setPasswordErrorMessage("Passwords do not match");
       isValid = false;
-    }else {
+    } else {
       setPasswordError(false);
-      setPasswordErrorMessage('');
+      setPasswordErrorMessage("");
     }
 
     return isValid;
   };
 
   return (
-    <SignUpContainer direction="column" sx={{ justifyContent: 'space-between' }}>
+    <SignUpContainer
+      direction="column"
+      sx={{ justifyContent: "space-between" }}
+    >
       <Card variant="outlined">
         <Typography
           component="h1"
           variant="h4"
-          sx={{ width: '100%', fontSize: 'clamp(2rem, 10vw, 2.15rem)' }}
+          sx={{ width: "100%", fontSize: "clamp(2rem, 10vw, 2.15rem)" }}
         >
           Create Account
         </Typography>
@@ -132,9 +135,9 @@ export default function CreateAccountPage() {
           onSubmit={handleSubmit}
           noValidate
           sx={{
-            display: 'flex',
-            flexDirection: 'column',
-            width: '100%',
+            display: "flex",
+            flexDirection: "column",
+            width: "100%",
             gap: 2,
           }}
         >
@@ -154,7 +157,7 @@ export default function CreateAccountPage() {
               onChange={(e) => setEmail(e.target.value)}
               error={emailError}
               helperText={emailErrorMessage}
-              color={passwordError ? 'error' : 'primary'}
+              color={emailError ? "error" : "primary"}
             />
           </FormControl>
           <FormControl>
@@ -172,7 +175,7 @@ export default function CreateAccountPage() {
               onChange={(e) => setPassword(e.target.value)}
               error={passwordError}
               helperText={passwordErrorMessage}
-              color={passwordError ? 'error' : 'primary'}
+              color={passwordError ? "error" : "primary"}
             />
           </FormControl>
           <FormControl>
