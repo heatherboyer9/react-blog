@@ -16,7 +16,13 @@ A full-stack blog application with article browsing, upvoting, and commenting. A
 - Firebase (Auth, SDK)
 - Emotion (CSS-in-JS for MUI)
 
-**Backend:** Node.js, Express 5, TypeScript, MongoDB, Firebase Admin SDK
+**Backend:**
+
+- Node.js
+- Express 5
+- TypeScript
+- MongoDB
+- Firebase Admin SDK
 
 ## Project Structure
 

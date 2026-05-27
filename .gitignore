@@ -22,6 +22,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.claude
+CLAUDE.md
 
 # Environement variables and keys
 .env
