@@ -4,7 +4,17 @@ A full-stack blog application with article browsing, upvoting, and commenting. A
 
 ## Tech Stack
 
-**Frontend:** React 18, TypeScript, Vite, React Router v6, Axios, Firebase Auth
+**Frontend:**
+
+- React 18
+- TypeScript
+- Vite
+- React Router v6
+- Material UI (MUI)
+- Tailwind CSS
+- Axios
+- Firebase (Auth, SDK)
+- Emotion (CSS-in-JS for MUI)
 
 **Backend:** Node.js, Express 5, TypeScript, MongoDB, Firebase Admin SDK
 
@@ -50,12 +60,12 @@ The app runs on `http://localhost:5173`. API requests are proxied to the backend
 
 ## API Endpoints
 
-| Method | Path | Auth | Description |
-|--------|------|------|-------------|
-| GET | `/api/articles` | — | List all articles |
-| GET | `/api/articles/:name` | — | Get a single article |
-| POST | `/api/articles/:name/upvote` | Required | Upvote an article (once per user) |
-| POST | `/api/articles/:name/comments` | Required | Add a comment to an article |
+| Method | Path                           | Auth     | Description                       |
+| ------ | ------------------------------ | -------- | --------------------------------- |
+| GET    | `/api/articles`                | —        | List all articles                 |
+| GET    | `/api/articles/:name`          | —        | Get a single article              |
+| POST   | `/api/articles/:name/upvote`   | Required | Upvote an article (once per user) |
+| POST   | `/api/articles/:name/comments` | Required | Add a comment to an article       |
 
 Authenticated routes require a Firebase ID token passed as a Bearer token in the `Authorization` header.
 
